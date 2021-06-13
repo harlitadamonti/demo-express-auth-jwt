@@ -1,21 +1,28 @@
 const express = require("express");
+const errorHandler = require("./middlewares/error-handler");
 const app = express();
 const port = process.env.PORT || 3000;
 const routers = require("./routes");
-const { errorHandler } = require("./middlewares/error-handler");
 
 app.use(express.json());
 app.use(routers);
 
 app.get("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Hello Refactorian !",
-  });
+    res.json({
+        success: true,
+        message: "Hello Refactorian !",
+    });
 });
 
 app.use(errorHandler);
 
+app.use((req, res, next) => {
+    res.status(404).json({
+        success: false,
+        message: "sorry url not found !",
+    });
+});
+
 app.listen(port, () => {
-  console.log(`run app in port ${port}`);
+    console.log(`run app in port ${port}`);
 });
