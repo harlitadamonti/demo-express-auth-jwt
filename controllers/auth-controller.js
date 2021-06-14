@@ -42,13 +42,13 @@ const login = async (req, res, next) => {
                     username: user.username,
                     id: user.id,
                     email: user.email,
-                    role: user.role
+                    role: user.role,
                 };
-                const token = authJwt.generate(payload);
+                const accessToken = authJwt.generate(payload);
                 return res.json({
                     success: true,
                     message: "success login",
-                    data: {user, token},
+                    data: { user, accessToken },
                 });
             }
         }

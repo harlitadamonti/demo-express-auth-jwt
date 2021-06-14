@@ -1,3 +1,4 @@
+const { JsonWebTokenError, TokenExpiredError } = require("jsonwebtoken");
 const ApiError = require("../helpers/api-error");
 
 const errorHandler = (err, req, res, next) => {
@@ -6,12 +7,11 @@ const errorHandler = (err, req, res, next) => {
             success: err.success,
             message: err.message,
         });
-    } else {
-        return res.status(500).json({
-            success: false,
-            message: "something went wrong !",
-        });
     }
+    return res.status(500).json({
+        success: false,
+        message: "something went wrong !",
+    });
 };
 
 module.exports = errorHandler;
