@@ -1,11 +1,11 @@
-const ApiError = require("../helpers/api-error")
+const ApiError = require("../helpers/api-error");
 
 const validation = (schema) => (req, res, next) => {
-    const {error} = schema.validate(req.body)
-    if(error){
-        next(ApiError.badRequest(error.message))
+    const { value, error } = schema.validate(req.body);
+    if (error) {
+        return next(ApiError.badRequest(error.message));
     }
-    next()
-}
+    return next();
+};
 
-module.exports = validation
+module.exports = validation;

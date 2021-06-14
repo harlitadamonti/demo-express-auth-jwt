@@ -12,16 +12,18 @@ const register = async (req, res, next) => {
         user.password = hash;
         const insertData = await db.User.create(user);
         insertData.password = undefined;
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "success register a user !",
             data: insertData,
         });
     } catch (error) {
         if (error.message === "Validation error") {
-            next(ApiError.badRequest("email or username has been used !"));
+            return next(
+                ApiError.badRequest("email or username has been used !")
+            );
         } else {
-            next(error);
+            return next(error);
         }
     }
 };
@@ -54,8 +56,7 @@ const login = async (req, res, next) => {
         }
         throw ApiError.badRequest("username or password doesn't match !");
     } catch (error) {
-        console.log(error);
-        next(error);
+        return next(error);
     }
 };
 

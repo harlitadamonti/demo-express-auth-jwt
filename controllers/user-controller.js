@@ -4,7 +4,7 @@ const profile = async (req, res, next) => {
     const { id } = req.user;
     const user = await db.User.findByPk(id);
     user.password = undefined;
-    res.json({
+    return res.json({
         success: true,
         message: "success retrieve user profile",
         data: user,
@@ -17,7 +17,7 @@ const list = async (req, res, next) => {
             exclude: ["password"],
         },
     });
-    res.json({
+    return res.json({
         success: true,
         message: "success retrieve all users data",
         data: users,

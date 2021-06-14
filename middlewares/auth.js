@@ -14,11 +14,11 @@ const authentication = (req, res, next) => {
         throw ApiError.badRequest("token required !");
     } catch (error) {
         if (error instanceof TokenExpiredError) {
-            next(ApiError.unauthorized("token expired !"));
+            return next(ApiError.unauthorized("token expired !"));
         } else if (error instanceof JsonWebTokenError) {
-            next(ApiError.unauthorized("token invalid !"));
+            return next(ApiError.unauthorized("token invalid !"));
         } else {
-            next(error);
+            return next(error);
         }
     }
 };
@@ -27,9 +27,9 @@ const authorization =
     (...roles) =>
     (req, res, next) => {
         if (roles.includes(req.user.role)) {
-            next();
+            return next();
         } else {
-            next(ApiError.forbidden("forbidden !"));
+            return next(ApiError.forbidden("forbidden !"));
         }
     };
 
